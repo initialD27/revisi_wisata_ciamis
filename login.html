@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin Login</title>
+  <link rel="stylesheet" href="dist/css/login.css" />
+</head>
+<body>
+  <div class="login-container">
+    <form id="loginForm" class="login-form" novalidate>
+      <h2>Login Wisata</h2>
+      <h1>Pastikan Email dan Password dengan benar.</h1>
+      <div class="input-group">
+        <label for="username">Username</label>
+        <input
+          type="text"
+          id="username"
+          name="username"
+          placeholder="Enter username"
+          required
+          autocomplete="username"
+        />
+        <small class="error-message"></small>
+      </div>
+
+      <div class="input-group">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder="Enter password"
+          required
+          autocomplete="current-password"
+          minlength="6"
+        />
+        <small class="error-message"></small>
+      </div>
+
+      <button type="submit" class="btn-login">Login</button>
+      <div id="loginMessage" class="login-message"></div>
+    </form>
+  </div>
+
+  <script src="dist/js/login.js"></script>
+</body>
+</html>
