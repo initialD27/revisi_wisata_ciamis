@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail Destinasi - Wisata Alam Ciamis</title>
+    <!-- Font Awesome CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .detail-destination {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .image-container {
+            position: relative;
+            text-align: left;
+            margin-bottom: 1rem;
+        }
+
+        .image-container img {
+            width: 80%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            object-fit: cover;
+            display: block;
+            margin-right: 40%;
+        }
+
+        .content-container {
+            padding: 1rem;
+        }
+
+        .destination-title {
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .destination-location {
+            color: #666;
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        .destination-description {
+            color: #444;
+            line-height: 1.8;
+            font-size: 1.1rem;
+            text-align: justify;
+            white-space: pre-line;
+        }
+
+        .back-button {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 2rem;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .back-button:hover {
+            background-color: #45a049;
+        }
+
+        .error-message {
+            text-align: center;
+            color: #ff0000;
+            padding: 2rem;
+            font-size: 1.2rem;
+        }
+
+        @media (max-width: 768px) {
+            .detail-destination {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+        }
+
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            font-size: 1.2rem;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="destination-content">
+            <div class="loading">Memuat data destinasi...</div>
+        </div>
+        <a href="../index.html#best-destination" class="back-button"><i class="fa-solid fa-arrow-left"></i> Kembali ke Beranda</a>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const id = urlParams.get('id');
+
+            if (id) {
+                fetch(`../api/destination/read_one.php?id=${id}`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Destinasi tidak ditemukan');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log('Data dari API:', data); // Debugging
+                        const content = document.getElementById('destination-content');
+                        content.innerHTML = `
+                            <div class="detail-destination">
+                                <div class="image-container">
+                                    <img src="../${data.image_url}" alt="${data.name}">
+                                </div>
+                                <div class="content-container">
+                                    <h1 class="destination-title">${data.name}</h1>
+                                    <p class="destination-location"><i class="fa-solid fa-location-dot"></i> ${data.location}</p>
+                                    <div class="destination-description">${data.description}</div>
+                                </div>
+                            </div>
+                        `;
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        document.getElementById('destination-content').innerHTML = 
+                            '<div class="error-message">Maaf, destinasi tidak ditemukan.</div>';
+                    });
+            } else {
+                document.getElementById('destination-content').innerHTML = 
+                    '<div class="error-message">ID destinasi tidak valid.</div>';
+            }
+        });
+    </script>
+</body>
+</html>
