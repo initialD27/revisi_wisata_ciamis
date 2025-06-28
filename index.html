@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Wisata Alam Ciamis</title>
+
+    <!-- Font Awesome CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <!-- Jonsuh Hamburger -->
+    <link rel="stylesheet" href="dist/css/hamburgers.css" />
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="dist/css/style.css" />
+  </head>
+
+  <body>
+    <!-- Header -->
+    <section class="header" id="home">
+      <div class="container">
+        <div class="navbar">
+          <div class="logo"><i class="fa solid fa-mountain"></i></div>
+          <ul class="menu">
+            <li><a href="#home"><i class="fa-solid fa-home"></i> Home</a></li>
+            <li><a href="#best-destination"><i class="fa-solid fa-star"></i> Best Destination</a></li>
+            <li><a href="#gallery"><i class="fa-solid fa-image"></i> Gallery</a></li>
+            <li><a href="#about"><i class="fa-solid fa-circle-info"></i> About</a></li>
+          </ul>
+          <button class="login-button">Login</button>
+          <button class="hamburger hamburger--spin" type="button">
+            <span class="hamburger-box">
+              <span class="hamburger-inner"></span>
+            </span>
+          </button>
+        </div>
+
+        <div class="hero">
+          <h1><span id="t1">Wisata Alam</span> <br /><span id="t2">Ciamis</span></h1>
+        </div>
+        <div class="jargon">
+          <div><p><span>Ciamis</span> adalah sebuah kabupaten yang terletak di Provinsi Jawa Barat, Indonesia.</p></div>
+          <div><p>Ibu kotanya juga bernama Ciamis. Kabupaten ini dikenal dengan suasana yang <br />masih asri, alamnya yang indah, dan kental dengan budaya Sunda.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Best Destination -->
+    <section class="best-destination" id="best-destination">
+      <div class="container">
+        <div class="best-destination-box">
+          <div class="box">
+            <h1>Best Destination</h1>
+            <p>Berikut ini destinasi pilihan terbaik yang dapat dikunjungi.</p>
+          </div>
+          <div class="box">
+            <!-- Swiper -->
+            <div class="swiper mySwiper">
+              <div class="swiper-wrapper" id="destinations-container">
+                <!-- Data destinasi dari API akan dimuat di sini -->
+              </div>
+              <div class="swiper-pagination"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Gallery -->
+    <section class="gallery" id="gallery">
+      <div class="container">
+        <div class="gallery-box">
+          <div class="box">
+            <h1>Our Gallery</h1>
+            <p>Berikut ini beberapa Gambar Destinasi.</p>
+          </div>
+          <div class="box">
+            <img src="assets/images/gallery/gallery-1.jpg" alt="">
+            <img src="assets/images/gallery/gallery-2.jpg" alt="">
+            <img src="assets/images/gallery/gallery-3.jpg" alt="">
+            <img src="assets/images/gallery/gallery-4.jpg" alt="">
+            <img src="assets/images/gallery/gallery-5.jpg" alt="">
+            <img src="assets/images/gallery/gallery-6.jpg" alt="">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section class="about" id="about">
+      <div class="container">
+        <div class="about-box">
+          <div class="box">
+            <h1>About Us</h1>
+            <p>Berikut ini Deskripsi Singkat Tentang Ciamis</p>
+          </div>
+          <div class="box">
+            <div><img src="assets/images/about/about-ciamis.png" alt=""></div>
+            <div>
+              <h2>Ciamis</h2>
+              <p>Ciamis adalah salah satu kabupaten yang terletak di Provinsi Jawa Barat, Indonesia. Ibu kotanya juga bernama Ciamis, dan lokasinya berada di bagian timur Jawa Barat.</p>
+              <p>Kabupaten ini dikenal punya suasana yang adem, asri, dan masyarakatnya ramah-ramah banget. Cocok lah buat lu yang suka ketenangan, jauh dari hiruk-pikuk kota besar.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <section class="footer">
+      <div class="container">
+        <div class="footer-box">
+          <p>&copy; Copyright by <span>Kelompok 1</span> 2025</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="dist/js/script.js"></script>
+
+    <script>
+      // Inisialisasi Swiper
+      let swiper = new Swiper(".mySwiper", {
+        slidesPerView: 1,
+        spaceBetween: 10,
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+          type: "fraction",
+        },
+        breakpoints: {
+          640: { slidesPerView: 2, spaceBetween: 20 },
+          992: { slidesPerView: 3, spaceBetween: 20 },
+          1200: { slidesPerView: 4, spaceBetween: 20 },
+        },
+      });
+
+      // Ambil data destinasi dari API
+      document.addEventListener('DOMContentLoaded', () => {
+        // ... existing code ...
+        fetch('api/destination/read.php')  // Mengubah dari destinations menjadi destination
+          .then(response => response.json())
+          .then(data => {
+            const container = document.getElementById('destinations-container');
+            container.innerHTML = '';
+
+            // Menyesuaikan properti dengan API
+            data.records.forEach(item => {
+              const slide = document.createElement('div');
+              slide.classList.add('swiper-slide');
+              slide.onclick = () => {
+                window.location.href = `pages/detail.html?id=${item.id}`;
+              };
+              slide.innerHTML = `
+                <img src="${item.image_url}" alt="${item.name}" />
+                <div class="loc">
+                  <h3>${item.name}</h3>
+                  <p><i class="fa-solid fa-location-dot"></i> ${item.location}</p>
+                </div>
+              `;
+              container.appendChild(slide);
+            });
+
+            swiper.update();
+          })
+          .catch(error => {
+            console.error('Gagal memuat destinasi:', error);
+          });
+      });
+// Load Gallery
+fetch('api/gallery/read.php')
+        .then(response => response.json())
+        .then(data => {
+          const galleryBox = document.querySelector('.gallery .box:last-child');
+          galleryBox.innerHTML = '';
+          
+          data.records.forEach(item => {
+            const img = document.createElement('img');
+            img.src = item.image_url;
+            img.alt = 'Gallery Image';
+            galleryBox.appendChild(img);
+          });
+        })
+        .catch(error => {
+          console.error('Gagal memuat gallery:', error);
+        });
+      
+    </script>
+  </body>
+</html>
