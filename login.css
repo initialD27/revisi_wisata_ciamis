@@ -1,0 +1,136 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap");
+
+:root {
+--color-white-10: white;
+  --color-white-9: rgba(255, 255, 255, 0.9);
+  --color-white-8: rgba(255, 255, 255, 0.8);
+  --color-white-7: rgba(255, 255, 255, 0.7);
+  --color-white-6: rgba(255, 255, 255, 0.6);
+  --color-white-5: rgba(255, 255, 255, 0.5);
+  --color-white-4: rgba(255, 255, 255, 0.4);
+  --color-white-3: rgba(255, 255, 255, 0.3);
+  --color-white-2: rgba(255, 255, 255, 0.2);
+  --color-white-1: rgba(255, 255, 255, 0.1);
+  --color-black-10: black;
+  --color-black-9: rgba(0, 0, 0, 0.9);
+  --color-black-8: rgba(0, 0, 0, 0.8);
+  --color-black-7: rgba(0, 0, 0, 0.7);
+  --color-black-6: rgba(0, 0, 0, 0.6);
+  --color-black-5: rgba(0, 0, 0, 0.5);
+  --color-black-4: rgba(0, 0, 0, 0.4);
+  --color-black-3: rgba(0, 0, 0, 0.3);
+  --color-black-2: rgba(0, 0, 0, 0.2);
+  --color-black-1: rgba(0, 0, 0, 0.1);
+  --color-ungu: rebeccapurple;
+  --color-black-footer: #111111;
+}
+
+/* Basic reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins';
+}
+
+body {
+  background-image: linear-gradient(var(--color-black-6), var(--color-black-6)),url(../../assets/images/header-img.jpg);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+
+.login-container {
+  background: white;
+  border-radius: 10px;
+  padding: 2rem;
+  width: 100%;
+  max-width: 600px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+.login-form h2 {
+  font-size: 35px;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: var(--color-black-10)
+}
+
+.login-form h1 {
+  font-size: 20px;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: var(--color-black-10)
+}
+
+.input-group {
+  margin-bottom: 1.25rem;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: 1.5px solid #cbd5e1;
+  transition: border-color 0.3s;
+}
+
+.input-group input:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 5px rgba(37, 99, 235, 0.5);
+}
+
+.error-message {
+  display: block;
+  margin-top: 0.3rem;
+  font-size: 0.85rem;
+  color: #dc2626; /* Red */
+  height: 18px;
+}
+
+.btn-login {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 8px;
+  background-color: #2563eb;
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.btn-login:hover {
+  background-color: #1e40af;
+}
+
+.login-message {
+  margin-top: 1rem;
+  text-align: center;
+  font-weight: 600;
+  font-size: 1rem;
+  height: 24px;
+  color: #15803d; /* Green for success */
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .login-container {
+    padding: 1.5rem;
+  }
+  .btn-login {
+    font-size: 1rem;
+  }
+}
