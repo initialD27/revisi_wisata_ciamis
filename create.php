@@ -1,34 +1,40 @@
 <?php
 require_once '../config/headers.php';
 require_once '../config/database.php';
-require_once '../objects/about.php';
+require_once '../objects/destination.php';
 
 $database = new Database();
 $db = $database->getConnection();
 
-$about = new About($db);
+$destination = new Destination($db);
 
-if(isset($_POST['nama_kota']) && isset($_POST['deskripsi']) && isset($_FILES['foto'])) {
-    $target_dir = "../../assets/images/about/";
-    $file_extension = pathinfo($_FILES["foto"]["name"], PATHINFO_EXTENSION);
-    $file_name = uniqid() . '.' . $file_extension;
-    $target_file = $target_dir . $file_name;
+if(
+    !empty($_POST['name']) &&
+    !empty($_POST['description']) &&
+    !empty($_POST['location'])
+) {
+    $destination->name = $_POST['name'];
+    $destination->description = $_POST['description'];
+    $destination->location = $_POST['location'];
     
-    if(move_uploaded_file($_FILES["foto"]["tmp_name"], $target_file)) {
-        $about->nama_kota = $_POST['nama_kota'];
-        $about->deskripsi = $_POST['deskripsi'];
-        $about->foto = "assets/images/about/" . $file_name;
+    // Handle image upload
+    if(isset($_FILES['image'])) {
+        $target_dir = "../../assets/images/best-destination/";
+        $file_extension = pathinfo($_FILES["image"]["name"], PATHINFO_EXTENSION);
+        $file_name = uniqid() . '.' . $file_extension;
+        $target_file = $target_dir . $file_name;
         
-        if($about->create()) {
-            http_response_code(201);
-            echo json_encode(array("message" => "Data berhasil ditambahkan."));
-        } else {
-            http_response_code(503);
-            echo json_encode(array("message" => "Gagal menambahkan data."));
+        if(move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
+            $destination->image_url = "assets/images/best-destination/" . $file_name;
         }
+    }
+
+    if($destination->create()) {
+        http_response_code(201);
+        echo json_encode(array("message" => "Destinasi wisata berhasil dibuat."));
     } else {
         http_response_code(503);
-        echo json_encode(array("message" => "Gagal mengupload file."));
+        echo json_encode(array("message" => "Tidak dapat membuat destinasi wisata."));
     }
 } else {
     http_response_code(400);
