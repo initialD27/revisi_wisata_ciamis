@@ -1,32 +1,36 @@
 <?php
 require_once '../config/headers.php';
 require_once '../config/database.php';
-require_once '../objects/about.php';
+require_once '../objects/destination.php';
 
 $database = new Database();
 $db = $database->getConnection();
 
-$about = new About($db);
-$stmt = $about->read();
+$destination = new Destination($db);
+$stmt = $destination->read();
 $num = $stmt->rowCount();
 
 if($num > 0) {
-    $about_arr = array();
-    $about_arr["records"] = array();
+    $destinations_arr = array();
+    $destinations_arr["records"] = array();
 
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         extract($row);
-        $about_item = array(
+        $destination_item = array(
             "id" => $id,
-            "nama_kota" => $nama_kota,
-            "deskripsi" => $deskripsi,
-            "foto" => $foto
+            "name" => $name,
+            "description" => $description,
+            "location" => $location,
+            "image_url" => $image_url,
+            "created_at" => $created_at,
+            "updated_at" => $updated_at
         );
-        array_push($about_arr["records"], $about_item);
+        array_push($destinations_arr["records"], $destination_item);
     }
+
     http_response_code(200);
-    echo json_encode($about_arr);
+    echo json_encode($destinations_arr);
 } else {
     http_response_code(404);
-    echo json_encode(array("message" => "Data tidak ditemukan."));
+    echo json_encode(array("message" => "No destinations found."));
 }
