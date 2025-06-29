@@ -1,36 +1,32 @@
 <?php
 require_once '../config/headers.php';
 require_once '../config/database.php';
-require_once '../objects/destination.php';
+require_once '../objects/gallery.php';
 
 $database = new Database();
 $db = $database->getConnection();
 
-$destination = new Destination($db);
-$stmt = $destination->read();
+$gallery = new Gallery($db);
+$stmt = $gallery->read();
 $num = $stmt->rowCount();
 
 if($num > 0) {
-    $destinations_arr = array();
-    $destinations_arr["records"] = array();
+    $gallery_arr = array();
+    $gallery_arr["records"] = array();
 
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         extract($row);
-        $destination_item = array(
+        $gallery_item = array(
             "id" => $id,
-            "name" => $name,
-            "description" => $description,
-            "location" => $location,
             "image_url" => $image_url,
-            "created_at" => $created_at,
-            "updated_at" => $updated_at
+            "created_at" => $created_at
         );
-        array_push($destinations_arr["records"], $destination_item);
+        array_push($gallery_arr["records"], $gallery_item);
     }
 
     http_response_code(200);
-    echo json_encode($destinations_arr);
+    echo json_encode($gallery_arr);
 } else {
     http_response_code(404);
-    echo json_encode(array("message" => "No destinations found."));
+    echo json_encode(array("message" => "Tidak ada foto."));
 }
